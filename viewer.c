@@ -25,7 +25,10 @@ int initViewer(VIEWER *viewer, char *filename) {
 }
 
 int closeViewer(VIEWER *viewer) {
-
+  if (viewer == NULL)
+    return -1;
+  fclose(viewer->file);
+  return 0;
 }
 
 void printBytes(VIEWER *viewer, int bytesRead) {
@@ -73,6 +76,9 @@ int main(int argc, char *argv[]) {
   }
 
   readFile(&viewer);
+
+  if (closeViewer(&viewer) != 0)
+    return 1;
 
   return 0;
 } 
